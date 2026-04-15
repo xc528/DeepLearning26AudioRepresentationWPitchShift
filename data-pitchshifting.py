@@ -23,7 +23,7 @@ for sr in SAMPLE_RATES:
         folder_path = os.path.join(base_path, folder_name)
 
         if not os.path.exists(folder_path):
-            print(f"⚠️ Missing folder: {folder_name}")
+            print(f" Missing folder: {folder_name}")
             continue
 
         audio_files = [f for f in os.listdir(folder_path)
