@@ -51,13 +51,7 @@ master_metadata.csv
 Each row contains:
 1000 samples × 10 pitch shifts × 2 sampling rates = 20000 rows
 
-
-
-
-
-
 ## Model
--------------------------------------------------------------------------------------------------------------------
 
 
 
