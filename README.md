@@ -98,7 +98,7 @@ To obtain a single representation for an entire audio clip, we apply mean poolin
 
 The code for OpenL3 processing can be found here:
 ```text
-Models/musicFM/DL_OpenL3.ipynb
+Models/OpenL3/DL_OpenL3.ipynb
 ```
 
 ## Analysis
