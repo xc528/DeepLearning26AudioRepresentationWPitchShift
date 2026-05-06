@@ -101,7 +101,60 @@ The code for OpenL3 processing can be found here:
 Models/OpenL3/DL_OpenL3.ipynb
 ```
 
-## Analysis
+## Analysis 
+### Visualization - Leo
+Embedding of models: **Music FM** & **Open L3**
+1. Different pitch transposition group (-5 to 5 semitones)
+2. torch.Size([1000, 1024])
+1000 Validation Samples (Each .pt file represents one sample )
+1024 Vector Dimensions per sample
+
+All analysis lives in [analysis/Embedding_analysis.ipynb](analysis/Embedding_analysis.ipynb).
+
+### Step 1 — UMAP Visualization (`embedding_preprocess.py`)
+
+Each model's embeddings are projected from high-dimensional space down to 2D using **UMAP** with cosine distance, then plotted as interactive Plotly scatter plots colored by instrument class.
+
+```
+UMAP settings: n_neighbors=15, min_dist=0.1, metric='cosine'
+```
+
+This lets us visually inspect whether the embedding space clusters instruments coherently and how cluster structure shifts under pitch perturbation.
+
+**Instrument classes (8):** Clarinet · Guitar · Female Vocals · Flute · Piano · Saxophone · Trumpet · Violin
+
+---
+
+### Step 2 — MLP Classifier Training (`classifier.py`)
+
+A lightweight **MLP classifier** is trained on top of the frozen embeddings to quantify how much instrument information is retained at each pitch shift.
+
+**Classifier architecture:**
+
+```
+Input (1024 or 512)
+  → Linear(→1024) + BatchNorm + ReLU + Dropout(0.3)
+  → Linear(→512)  + BatchNorm + ReLU + Dropout(0.3)
+  → Linear(→256)  + BatchNorm + ReLU + Dropout(0.3)
+  → Linear(→8)    [output: 8 instrument classes]
+```
+
+**Training setup:**
+
+| Setting | Value |
+|---|---|
+| Split | 70% train / 15% val / 15% test (seed=42) |
+| Optimizer | Adam (lr=1e-3, weight_decay=1e-4) |
+| Scheduler | ReduceLROnPlateau (on val loss) |
+| Epochs | 100 (best val-accuracy checkpoint saved) |
+| Loss | CrossEntropyLoss |
+
+---
+
+### Step 3 — Confusion Matrices (`confusion_matrix.py`)
+
+Per-class confusion matrices are generated for every (model, pitch-shift) combination and saved to [analysis/img/](analysis/img/). These reveal which instruments are most susceptible to mis-classification when pitch is altered.
+
 
 
 
