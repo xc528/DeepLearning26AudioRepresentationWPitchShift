@@ -1,5 +1,5 @@
 # DeepLearning26AudioRepresentationWPitchShift
-## Data
+## Data - Qingjuan 
 ### label1000.py
 #### Subset Metadata Extraction
 This script extracts metadata for a selected subset of audio files from the Medley-solos-DB dataset and generates a corresponding CSV file.
@@ -65,7 +65,7 @@ The general workflow for both models was:
 4. Save the extracted embeddings as `.npy` files.
 5. Save corresponding metadata, such as file name, label, and dataset split, as `.csv` files.
 
-### MusicFM
+### MusicFM - Rhan
 
 **MusicFM** is a foundation model for music informatics. It is trained using self-supervised learning and is designed to produce meaningful audio representations from music signals without requiring manually labeled training data.
 
@@ -85,7 +85,7 @@ The example usage for MusicFM is included in the repository under:
 Models/musicFM/DeepLearningModelMusicFM.ipynb
 ```
 
-### OpenL3
+### OpenL3 - Cathy 
 **OpenL3** is a deep learning–based audio embedding model that learns meaningful representations of sound by exploiting the natural correspondence between audio and visual signals in video data. By training on large-scale video datasets, the model captures both low-level acoustic features (like timbre and pitch) and higher-level semantic information (such as musical events or environments).
 
 In this project, we use a version of OpenL3 that has been trained on datasets dominated by musical performances, making it particularly well-suited for analyzing music-related audio.
