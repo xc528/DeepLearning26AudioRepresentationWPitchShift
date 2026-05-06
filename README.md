@@ -155,7 +155,59 @@ Input (1024 or 512)
 
 Per-class confusion matrices are generated for every (model, pitch-shift) combination and saved to [analysis/img/](analysis/img/). These reveal which instruments are most susceptible to mis-classification when pitch is altered.
 
+## Analysis
+### Quantitative Comparison - Yian
 
+Aggregates Leo's per-shift outputs across 5 shift levels (−5, −1, 0, +1, +5) × 2 models = **10 (model, shift) configurations × 8 instruments**, to characterize how pitch perturbation affects classification structure beyond what any single shift level can show.
+
+
+### Step 1 — Accuracy curve aggregation
+
+Test accuracies extracted from each of the 10 confusion matrices, plotted as a function of pitch shift (one curve per model).
+
+| Shift | OpenL3 | MusicFM | Gap |
+|---|---|---|---|
+| −5 | 99.3% | 96.0% | 3.3 |
+| −1 | 98.0% | 95.3% | 2.7 |
+| 0 | 99.3% | 96.7% | 2.6 |
+| +1 | 97.3% | 95.3% | 2.0 |
+| +5 | 99.3% | 97.3% | 2.0 |
+
+Both curves stay flat across shifts. OpenL3 leads MusicFM by **2–3 percentage points at every shift level** — no degradation at extremes for either model.
+
+### Step 2 — Confusion structure analysis
+
+Off-diagonal entries catalogued and compared against the baseline (shift = 0).
+
+**Persistent confusions** (baseline + every shifted version):
+- **MusicFM:** Clarinet ↔ Flute, Clarinet → Trumpet, Guitar → Clarinet / Piano
+- **OpenL3:** Guitar → Piano (every shift)
+
+**Emergent confusions** (shift-only): **none.** Every error pattern observed at ±5 already exists at shift = 0.
+
+→ Pitch perturbation amplifies existing weaknesses rather than introducing new failure modes.
+
+### Step 3 — Per-instrument fragility
+
+Per-class F1 stratified across shifts to identify systematically fragile vs robust classes.
+
+| Class | OpenL3 (+5 semi) | MusicFM (−5 semi) |
+|---|---|---|
+| Clarinet | 0.97 | 0.89 |
+| Flute | 0.97 | 0.92 |
+| Piano | 1.00 | 0.93 |
+| Guitar | 1.00 | 0.95 |
+| Saxophone | 1.00 | 0.96 |
+| Trumpet | 1.00 | 1.00 |
+| Violin | 1.00 | 1.00 |
+| Female Vocals | 1.00 | 1.00 |
+
+**Most fragile:** Clarinet, Flute — sustained-tone wind instruments whose timbre is tightly coupled to the harmonic series.
+**Most robust:** Female Vocals (formant-locked), Saxophone (reed signature), Violin (bowed attack) — distinguishing features sit outside the shifted fundamental.
+
+### Methodological caveat
+
+Within-shift training measures **discriminability preservation**, not **pitch invariance**. A pitch-sensitive embedding could still produce flat accuracy if classes remain separable in the shifted space.
 
 
 
