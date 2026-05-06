@@ -84,6 +84,23 @@ The example usage for MusicFM is included in the repository under:
 ```text
 Models/musicFM/DeepLearningModelMusicFM.ipynb
 ```
+
+### OpenL3
+**OpenL3** is a deep learning–based audio embedding model that learns meaningful representations of sound by exploiting the natural correspondence between audio and visual signals in video data. By training on large-scale video datasets, the model captures both low-level acoustic features (like timbre and pitch) and higher-level semantic information (such as musical events or environments).
+
+In this project, we use a version of OpenL3 that has been trained on datasets dominated by musical performances, making it particularly well-suited for analyzing music-related audio.
+
+The input to the model consists of mono audio clips resampled to 48 kHz, ensuring consistency with the model’s expected format. The audio is processed in short overlapping time windows, producing a sequence of embeddings over time.
+
+For each time window, the model outputs a 512-dimensional embedding vector, resulting in a time series of feature vectors that describe how the audio content evolves.
+
+To obtain a single representation for an entire audio clip, we apply mean pooling, which averages the embeddings across all time steps. This reduces the sequence of vectors into one fixed-length 512-dimensional vector, effectively summarizing the overall characteristics of the audio signal.
+
+The code for OpenL3 processing can be found here:
+```text
+Models/musicFM/DL_OpenL3.ipynb
+```
+
 ## Analysis
 
 
