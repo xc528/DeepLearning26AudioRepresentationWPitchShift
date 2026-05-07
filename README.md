@@ -155,6 +155,7 @@ Input (1024 or 512)
 
 Per-class confusion matrices are generated for every (model, pitch-shift) combination and saved to [analysis/img/](analysis/img/). These reveal which instruments are most susceptible to mis-classification when pitch is altered.
 
+
 ## Analysis
 ### Quantitative Comparison - Yian
 
@@ -163,7 +164,7 @@ Aggregates Leo's per-shift outputs across 5 shift levels (−5, −1, 0, +1, +5)
 
 ### Step 1 — Accuracy curve aggregation
 
-Test accuracies extracted from each of the 10 confusion matrices, plotted as a function of pitch shift (one curve per model).
+Test accuracies extracted from each of the 10 confusion matrices in [analysis/img/](analysis/img/), plotted as a function of pitch shift (one curve per model).
 
 | Shift | OpenL3 | MusicFM | Gap |
 |---|---|---|---|
@@ -174,6 +175,7 @@ Test accuracies extracted from each of the 10 confusion matrices, plotted as a f
 | +5 | 99.3% | 97.3% | 2.0 |
 
 Both curves stay flat across shifts. OpenL3 leads MusicFM by **2–3 percentage points at every shift level** — no degradation at extremes for either model.
+
 
 ### Step 2 — Confusion structure analysis
 
@@ -186,6 +188,7 @@ Off-diagonal entries catalogued and compared against the baseline (shift = 0).
 **Emergent confusions** (shift-only): **none.** Every error pattern observed at ±5 already exists at shift = 0.
 
 → Pitch perturbation amplifies existing weaknesses rather than introducing new failure modes.
+
 
 ### Step 3 — Per-instrument fragility
 
@@ -205,9 +208,8 @@ Per-class F1 stratified across shifts to identify systematically fragile vs robu
 **Most fragile:** Clarinet, Flute — sustained-tone wind instruments whose timbre is tightly coupled to the harmonic series.
 **Most robust:** Female Vocals (formant-locked), Saxophone (reed signature), Violin (bowed attack) — distinguishing features sit outside the shifted fundamental.
 
+
 ### Methodological caveat
 
 Within-shift training measures **discriminability preservation**, not **pitch invariance**. A pitch-sensitive embedding could still produce flat accuracy if classes remain separable in the shifted space.
-
-
 
